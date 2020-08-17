@@ -1,0 +1,12 @@
+<mvc:View controllerName="logaligroup.Customers.controller.App" xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+	xmlns:core="sap.ui.core">
+	<Page title="{i18n>homePageTitle}">
+		<headerContent>
+			<Button id="helloDialogHeader" icon="sap-icon://action" press=".onOpenHeader" class="sapUiSmallMarginEnd"/>
+		</headerContent>
+		<content>
+			<mvc:XMLView viewName="logaligroup.Customers.view.HelloPanel"/>
+			<mvc:XMLView viewName="logaligroup.Customers.view.CustomerListWz"/>
+		</content>
+	</Page>
+</mvc:View>
