@@ -44,11 +44,69 @@ sap.ui.define([
 		},
 
 		init: function () {
-
+			this.setAggregation("_rating", new RatingIndicator({
+				value: this.getValue(),
+				iconSize: "2rem",
+				visualMode: "Half",
+				liveChange: this._onRate.bind(this)
+			}));
+			
+			this.setAggregation("_label", new Label({
+				text: "{i18n>customerRatingLabelInitial}"
+			}).addStyleClass("sapUiSmallMargin"));
+			
+			this.setAggregation("_button", new Button({
+				text: "{i18n>customerRatingButton}",
+				press: this._onSubmit.bind(this)
+			}).addStyleClass("sapUiTinyMarginTopBotton"));
+			
+		},
+		
+		reset: function() {
+			var oResourceBundle = this.getModel("i18n").getResourceBundle();
+			
+			this.setValue(0);
+			this.getAggregation("_rating").setEnabled(true);
+			this.getAggregation("_button").setEnabled(true);
+			this.getAggregation("_label").setText(oResourceBundle.getText("customerRatingLabelInitial"));
+			this.getAggregation("_label").setDesign("Standard");
+		},
+		
+		_onRate: function(oEvent) {
+			var oResourceBundle = this.getModel("i18n").getResourceBundle();
+			var fValue = oEvent.getParameter("value");
+			
+			this.setProperty("value", fValue, true);
+			this.getAggregation("_label").setText(oResourceBundle.getText("customerRatingLabelIndicator", [fValue, oEvent.getSource().getMaxValue()]));
+			this.getAggregation("_label").setDesign("Bold");
+			
+		},
+		
+		setValue: function(fValue){
+			this.setProperty("value", fValue, true);
+			this.getAggregation("_rating").setValue(fValue);
+			
+		},
+		
+		_onSubmit: function(oEvent) {
+			var oResourceBundle = this.getModel("i18n").getResourceBundle();
+			
+			this.getAggregation("_rating").setEnabled(false);
+			this.getAggregation("_label").setText(oResourceBundle.getText("customerRatingLabelFinal"));
+			this.getAggregation("_button").setEnabled(false);
+			this.fireEvent("change", {
+				value: this.getValue()
+			});
 		},
 
-		render: function (oRm, oControl) {
-
+		renderer: function (oRm, oControl) {
+			oRm.openStart("div", oControl);
+			oRm.class("customerRating");
+			oRm.openEnd();
+			oRm.renderControl(oControl.getAggregation("_rating"));
+			oRm.renderControl(oControl.getAggregation("_label"));
+			oRm.renderControl(oControl.getAggregation("_button"));
+			oRm.close("div");
 		}
 
 	});
