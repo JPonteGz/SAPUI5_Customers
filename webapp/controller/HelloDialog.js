@@ -1,7 +1,8 @@
 sap.ui.define([
 	"sap/ui/base/ManagedObject",
-	"sap/ui/core/Fragment"
-], function (ManageObject, Fragment) {
+	"sap/ui/core/Fragment",
+	"sap/ui/core/syncStyleClass"
+], function (ManageObject, Fragment, syncStyleClass) {
 
 	return ManageObject.extend("logaligroup.Customers.controller.HelloDialog", {
 
@@ -33,6 +34,7 @@ sap.ui.define([
 					controller: oFramentController // Indicar el controlador de fragment(antes era this)
 				}).then(function (oDialog) {
 					oView.addDependent(oDialog);
+					syncStyleClass(oView.getController().getOwnerComponent().getContentDensityClass(), oView, oDialog);
 					oDialog.open();
 				});
 			} else {

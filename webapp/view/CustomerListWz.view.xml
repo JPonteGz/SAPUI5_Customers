@@ -1,20 +1,46 @@
 <mvc:View controllerName="logaligroup.Customers.controller.CustomerList" xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc">
-	<List id="customerList" headerText="{i18n>customerListTitle}" class="sapUiResponaiveMargin" width="auto"
-		items="{ path: 'customerWz>/Customers', sorter: { path : 'Country', group: true } }">
+	<Panel accessibleRole="Region">
 		<headerToolbar>
 			<Toolbar>
 				<Title text="{i18n>customerListTitle}"/>
 				<ToolbarSpacer/>
-				<SearchField width="50%" search=".onFilterCustomers"/>
+				<SearchField width="50%" 
+							search=".onFilterCustomers"
+							ariaLabelledBy="searchFieldLabel"
+							ariaDescribedBy="searchFieldDescription"
+							placeholder="{i18n>searchFieldPlaceHolder}"/>
 			</Toolbar>
 		</headerToolbar>
-		<items>
-			<ObjectListItem title="{customerWz>CompanyName} / {customerWz>ContactName} - {customerWz>City}" number="{customerWz>PostalCode}"
-				type="Navigation" press="onPress">
-				<firstStatus>
-					<ObjectStatus text="{ path: 'customerWz>ContactTitle', formatter: '.formatter.statusText' }"/>
-				</firstStatus>
-			</ObjectListItem>
-		</items>
-	</List>
+		<Table id="customerList" class="sapUiResponaiveMargin" width="auto"
+			items="{ path: 'customerWz>/Customers', sorter: { path : 'Country', group: true } }">
+			<columns>
+				<Column minScreenWidth="Tablet" demandPopin="false">
+					<Text text="{i18n>columnCompanyName}"/>
+				</Column>
+				<Column>
+					<Text text="{i18n>columnContactName}"/>
+				</Column>
+				<Column minScreenWidth="Small" demandPopin="true">
+					<Text text="{i18n>columnCity}"/>
+				</Column>
+				<Column hAlign="End" minScreenWidth="Small" demandPopin="true" width="8em">
+					<Text text="{i18n>columnPostalCode}"/>
+				</Column>
+				<Column hAlign="End">
+					<Text text="{i18n>columnContactTitle}"/>
+				</Column>
+			</columns>
+			<items>
+				<ColumnListItem type="Navigation" press=".onPress">
+					<cells>
+						<Text text="{customerWz>CompanyName}"/>
+						<Text text="{customerWz>ContactName}"/>
+						<Text text="{customerWz>City}"/>
+						<ObjectNumber number="{customerWz>PostalCode}" emphasized="false"/>
+						<Text text="{ path: 'customerWz>ContactTitle', formatter: '.formatter.statusText' }"/>
+					</cells>
+				</ColumnListItem>
+			</items>
+		</Table>
+	</Panel>
 </mvc:View>

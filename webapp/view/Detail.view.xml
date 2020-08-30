@@ -2,7 +2,11 @@
 	xmlns:html="http://www.w3.org/1999/xhtml"
 	xmlns:lc="logaligroup.Customers.control">
 	<Page title="{i18n>detailPageTitle}" showNavButton="true" navButtonPress=".onNavBack">
-		<ObjectHeader title="{customerWz>ContactName}">
+		<ObjectHeader 
+			intro="{customerWz>CompanyName}"
+			title="{customerWz>ContactName}"
+			responsive="true"
+			fullScreenOptimized="true">
 			<attributes>
 				<ObjectAttribute text="{customerWz>Address}"></ObjectAttribute>
 				<ObjectAttribute text="{customerWz>PostalCode}"></ObjectAttribute>
